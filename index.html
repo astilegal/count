@@ -2,22 +2,226 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>View Counter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyberpunk View Counter</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200;400;700&display=swap');
+
+    :root {
+      --primary-color: #00fff2;
+      --secondary-color: #ff00e6;
+      --tertiary-color: #ffff00;
+      --background-color: #0a0a0a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Oxanium', cursive;
+      background-color: var(--background-color);
+      color: var(--primary-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      perspective: 1000px;
+    }
+
+    .container {
+      transform-style: preserve-3d;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      border: 2px solid var(--primary-color);
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--tertiary-color);
+      text-shadow: 0 0 10px var(--tertiary-color);
+      position: relative;
+    }
+
+    #view-count {
+      font-size: 5em;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-shadow: 0 0 10px var(--primary-color),
+                   0 0 20px var(--primary-color),
+                   0 0 30px var(--primary-color);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    #view-count::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 110%;
+      height: 120%;
+      background: linear-gradient(45deg, var(--primary-color), transparent);
+      filter: blur(20px);
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 var(--secondary-color);
+      clip: rect(24px, 550px, 90px, 0);
+      animation: glitch-anim 3s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: -2px 0 var(--tertiary-color);
+      clip: rect(85px, 550px, 140px, 0);
+      animation: glitch-anim 2s infinite linear alternate-reverse;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--background-color);
+      background-color: var(--primary-color);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        transparent 40%,
+        var(--secondary-color) 40%,
+        var(--secondary-color) 60%,
+        transparent 60%,
+        transparent 100%
+      );
+      transform: rotate(45deg);
+      animation: shine 3s infinite linear;
+    }
+
+    .button:hover {
+      background-color: var(--secondary-color);
+      color: var(--background-color);
+      box-shadow: 0 0 20px var(--secondary-color);
+    }
+
+    @keyframes shine {
+      0% { top: -50%; left: -50%; }
+      100% { top: 150%; left: 150%; }
+    }
+
+    @keyframes glitch-anim {
+      0% { clip: rect(11px, 9999px, 82px, 0); }
+      5% { clip: rect(59px, 9999px, 53px, 0); }
+      10% { clip: rect(21px, 9999px, 16px, 0); }
+      15% { clip: rect(86px, 9999px, 85px, 0); }
+      20% { clip: rect(45px, 9999px, 66px, 0); }
+      25% { clip: rect(82px, 9999px, 31px, 0); }
+      30% { clip: rect(74px, 9999px, 71px, 0); }
+      35% { clip: rect(89px, 9999px, 34px, 0); }
+      40% { clip: rect(6px, 9999px, 93px, 0); }
+      45% { clip: rect(25px, 9999px, 55px, 0); }
+      50% { clip: rect(82px, 9999px, 17px, 0); }
+      55% { clip: rect(56px, 9999px, 99px, 0); }
+      60% { clip: rect(70px, 9999px, 76px, 0); }
+      65% { clip: rect(84px, 9999px, 37px, 0); }
+      70% { clip: rect(65px, 9999px, 66px, 0); }
+      75% { clip: rect(73px, 9999px, 90px, 0); }
+      80% { clip: rect(39px, 9999px, 51px, 0); }
+      85% { clip: rect(47px, 9999px, 72px, 0); }
+      90% { clip: rect(31px, 9999px, 67px, 0); }
+      95% { clip: rect(52px, 9999px, 36px, 0); }
+      100% { clip: rect(94px, 9999px, 95px, 0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate3d(0, 1, 0, 0deg); }
+      50% { transform: translateY(-20px) rotate3d(0, 1, 0, 10deg); }
+    }
+
+    #canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
-  <h1>Total Views: <span id="view-count"></span></h1>
+  <canvas id="canvas"></canvas>
+  <div class="container">
+    <div class="card">
+      <h1 class="glitch" data-text="Total Views">Total Views</h1>
+      <div id="view-count" class="glitch" data-text="0">0</div>
+      <a href="https://astilegal.github.io/information/" class="button" target="_blank">Main Website</a>
+    </div>
+  </div>
+
   <script>
     function updateViewCount() {
-      fetch('https://counter-r266.onrender.com/count')  // Update with your Render URL
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.json();
-        })
+      fetch('https://counter-r266.onrender.com/count')
+        .then(response => response.json())
         .then(data => {
-          console.log('View count data:', data);  // Log data to see the structure
-          document.getElementById('view-count').textContent = data.views || '0';
+          const viewCount = document.getElementById('view-count');
+          viewCount.textContent = data.views || '0';
+          viewCount.setAttribute('data-text', data.views || '0');
+          viewCount.style.transform = 'scale(1.2)';
+          setTimeout(() => viewCount.style.transform = 'scale(1)', 300);
         })
         .catch(error => {
           console.error('Error fetching view count:', error);
@@ -25,8 +229,60 @@
         });
     }
 
-    updateViewCount();  // Initial load
-    setInterval(updateViewCount, 60000);  // Update every minute
+    updateViewCount();
+    setInterval(updateViewCount, 60);
+
+    // 3D effect
+    const card = document.querySelector('.card');
+    document.addEventListener('mousemove', (e) => {
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+      card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+      
+      // Add parallax effect to the button
+      const button = document.querySelector('.button');
+      button.style.transform = `translateZ(50px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+
+    // Matrix rain effect
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const columns = Math.floor(canvas.width / 20);
+    const drops = [];
+
+    for (let i = 0; i < columns; i++) {
+      drops[i] = 1;
+    }
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#00fff2';
+      ctx.font = '15px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = String.fromCharCode(Math.random() * 128);
+        ctx.fillText(text, i * 20, drops[i] * 20);
+
+        if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 33);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
   </script>
 </body>
 </html>
