@@ -275,16 +275,35 @@
     setInterval(checkHealth, 30000); // Check health every 30 seconds
 
     // 3D effect
-    const card = document.querySelector('.card');
-    document.addEventListener('mousemove', (e) => {
-      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-      card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-      
-      // Add parallax effect to the button
-      const button = document.querySelector('.button');
-      button.style.transform = `translateZ(50px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-    });
+     const card = document.querySelector('.card');
+  const button = document.querySelector('.button');
+
+  function handleMouseMove(e) {
+    const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+    const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+    card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    button.style.transform = `translateZ(50px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+  }
+
+  function resetCardPosition() {
+    card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    button.style.transform = 'translateZ(0px) rotateY(0deg) rotateX(0deg)';
+  }
+
+  // Check if the device supports touch events
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    // Touch device - disable 3D effect
+    card.style.transition = 'none';
+    button.style.transition = 'none';
+  } else {
+    // Non-touch device - enable 3D effect
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseleave', resetCardPosition);
+  }
+button.addEventListener('click', function(e) {
+    e.preventDefault();
+    window.open(this.href, '_blank', 'noopener,noreferrer');
+  });
 
     // Matrix rain effect
     const canvas = document.getElementById('canvas');
