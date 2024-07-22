@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -200,17 +201,35 @@
       height: 100%;
       z-index: -1;
     }
+#health-status {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+.healthy {
+      background-color: #00ff00;
+      color: #000000;
+    }
+.unhealthy {
+      background-color: #ff0000;
+      color: #ffffff;
+    }
   </style>
 </head>
 <body>
   <canvas id="canvas"></canvas>
+  <div id="health-status">Checking...</div>
   <div class="container">
     <div class="card">
       <h1 class="glitch" data-text="Total Views">Total Views</h1>
       <div id="view-count" class="glitch" data-text="0">0</div>
-      <a href="https://astilegal.github.io/information/" class="button" target="_blank">Main Website</a>
+      <a href="https://astilegal.github.io/information/" class="button" target="_blank" rel="noopener noreferrer">Main Website</a>
     </div>
   </div>
+
 
   <script>
     function updateViewCount() {
@@ -229,8 +248,31 @@
         });
     }
 
+    function checkHealth() {
+      fetch('https://counter-r266.onrender.com/health')
+        .then(response => response.json())
+        .then(data => {
+          const healthStatus = document.getElementById('health-status');
+          if (data.status === 'healthy') {
+            healthStatus.textContent = 'Healthy';
+            healthStatus.className = 'healthy';
+          } else {
+            healthStatus.textContent = 'Unhealthy';
+            healthStatus.className = 'unhealthy';
+          }
+        })
+        .catch(error => {
+          console.error('Error checking health:', error);
+          const healthStatus = document.getElementById('health-status');
+          healthStatus.textContent = 'Unhealthy';
+          healthStatus.className = 'unhealthy';
+        });
+    }
+
     updateViewCount();
-    setInterval(updateViewCount, 60);
+    checkHealth();
+    setInterval(updateViewCount, 600); // Update view count every minute
+    setInterval(checkHealth, 30000); // Check health every 30 seconds
 
     // 3D effect
     const card = document.querySelector('.card');
