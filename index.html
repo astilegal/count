@@ -1,349 +1,547 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cyberpunk View Counter</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@200;400;700&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.45">
+    <title>Hyper-Advanced View Analytics Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 
-    :root {
-      --primary-color: #00fff2;
-      --secondary-color: #ff00e6;
-      --tertiary-color: #ffff00;
-      --background-color: #0a0a0a;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Oxanium', cursive;
-      background-color: var(--background-color);
-      color: var(--primary-color);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow: hidden;
-      perspective: 1000px;
-    }
-
-    .container {
-      transform-style: preserve-3d;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-      border: 2px solid var(--primary-color);
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 20px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--tertiary-color);
-      text-shadow: 0 0 10px var(--tertiary-color);
-      position: relative;
-    }
-
-    #view-count {
-      font-size: 5em;
-      font-weight: 700;
-      color: var(--primary-color);
-      text-shadow: 0 0 10px var(--primary-color),
-                   0 0 20px var(--primary-color),
-                   0 0 30px var(--primary-color);
-      position: relative;
-      transition: all 0.3s ease;
-    }
-
-    #view-count::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 110%;
-      height: 120%;
-      background: linear-gradient(45deg, var(--primary-color), transparent);
-      filter: blur(20px);
-      opacity: 0.7;
-      z-index: -1;
-    }
-
-    .glitch {
-      position: relative;
-    }
-
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .glitch::before {
-      left: 2px;
-      text-shadow: -2px 0 var(--secondary-color);
-      clip: rect(24px, 550px, 90px, 0);
-      animation: glitch-anim 3s infinite linear alternate-reverse;
-    }
-
-    .glitch::after {
-      left: -2px;
-      text-shadow: -2px 0 var(--tertiary-color);
-      clip: rect(85px, 550px, 140px, 0);
-      animation: glitch-anim 2s infinite linear alternate-reverse;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 10px 20px;
-      font-size: 1.2em;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--background-color);
-      background-color: var(--primary-color);
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .button::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        45deg,
-        transparent,
-        transparent 40%,
-        var(--secondary-color) 40%,
-        var(--secondary-color) 60%,
-        transparent 60%,
-        transparent 100%
-      );
-      transform: rotate(45deg);
-      animation: shine 3s infinite linear;
-    }
-
-    .button:hover {
-      background-color: var(--secondary-color);
-      color: var(--background-color);
-      box-shadow: 0 0 20px var(--secondary-color);
-    }
-
-    @keyframes shine {
-      0% { top: -50%; left: -50%; }
-      100% { top: 150%; left: 150%; }
-    }
-
-    @keyframes glitch-anim {
-      0% { clip: rect(11px, 9999px, 82px, 0); }
-      5% { clip: rect(59px, 9999px, 53px, 0); }
-      10% { clip: rect(21px, 9999px, 16px, 0); }
-      15% { clip: rect(86px, 9999px, 85px, 0); }
-      20% { clip: rect(45px, 9999px, 66px, 0); }
-      25% { clip: rect(82px, 9999px, 31px, 0); }
-      30% { clip: rect(74px, 9999px, 71px, 0); }
-      35% { clip: rect(89px, 9999px, 34px, 0); }
-      40% { clip: rect(6px, 9999px, 93px, 0); }
-      45% { clip: rect(25px, 9999px, 55px, 0); }
-      50% { clip: rect(82px, 9999px, 17px, 0); }
-      55% { clip: rect(56px, 9999px, 99px, 0); }
-      60% { clip: rect(70px, 9999px, 76px, 0); }
-      65% { clip: rect(84px, 9999px, 37px, 0); }
-      70% { clip: rect(65px, 9999px, 66px, 0); }
-      75% { clip: rect(73px, 9999px, 90px, 0); }
-      80% { clip: rect(39px, 9999px, 51px, 0); }
-      85% { clip: rect(47px, 9999px, 72px, 0); }
-      90% { clip: rect(31px, 9999px, 67px, 0); }
-      95% { clip: rect(52px, 9999px, 36px, 0); }
-      100% { clip: rect(94px, 9999px, 95px, 0); }
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate3d(0, 1, 0, 0deg); }
-      50% { transform: translateY(-20px) rotate3d(0, 1, 0, 10deg); }
-    }
-
-    #canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-#health-status {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-.healthy {
-      background-color: #00ff00;
-      color: #000000;
-    }
-.unhealthy {
-      background-color: #ff0000;
-      color: #ffffff;
-    }
-  </style>
-</head>
-<body>
-  <canvas id="canvas"></canvas>
-  <div id="health-status">Checking...</div>
-  <div class="container">
-    <div class="card">
-      <h1 class="glitch" data-text="Total Views">Total Views</h1>
-      <div id="view-count" class="glitch" data-text="0">0</div>
-      <a href="https://astilegal.github.io/information/" class="button" target="_blank" rel="noopener noreferrer">Main Website</a>
-    </div>
-  </div>
-
-
-  <script>
-    function updateViewCount() {
-      fetch('https://counter-r266.onrender.com/count')
-        .then(response => response.json())
-        .then(data => {
-          const viewCount = document.getElementById('view-count');
-          viewCount.textContent = data.views || '0';
-          viewCount.setAttribute('data-text', data.views || '0');
-          viewCount.style.transform = 'scale(1.2)';
-          setTimeout(() => viewCount.style.transform = 'scale(1)', 300);
-        })
-        .catch(error => {
-          console.error('Error fetching view count:', error);
-          document.getElementById('view-count').textContent = 'Error';
-        });
-    }
-
-    function checkHealth() {
-      fetch('https://counter-r266.onrender.com/health')
-        .then(response => response.json())
-        .then(data => {
-          const healthStatus = document.getElementById('health-status');
-          if (data.status === 'healthy') {
-            healthStatus.textContent = 'Healthy';
-            healthStatus.className = 'healthy';
-          } else {
-            healthStatus.textContent = 'Unhealthy';
-            healthStatus.className = 'unhealthy';
-          }
-        })
-        .catch(error => {
-          console.error('Error checking health:', error);
-          const healthStatus = document.getElementById('health-status');
-          healthStatus.textContent = 'Unhealthy';
-          healthStatus.className = 'unhealthy';
-        });
-    }
-
-    updateViewCount();
-    checkHealth();
-    setInterval(updateViewCount, 600); // Update view count every minute
-    setInterval(checkHealth, 30000); // Check health every 30 seconds
-
-    // 3D effect
-     const card = document.querySelector('.card');
-  const button = document.querySelector('.button');
-
-  function handleMouseMove(e) {
-    const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-    const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-    card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-    button.style.transform = `translateZ(50px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-  }
-
-  function resetCardPosition() {
-    card.style.transform = 'rotateY(0deg) rotateX(0deg)';
-    button.style.transform = 'translateZ(0px) rotateY(0deg) rotateX(0deg)';
-  }
-
-  // Check if the device supports touch events
-  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-    // Touch device - disable 3D effect
-    card.style.transition = 'none';
-    button.style.transition = 'none';
-  } else {
-    // Non-touch device - enable 3D effect
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseleave', resetCardPosition);
-  }
-button.addEventListener('click', function(e) {
-    e.preventDefault();
-    window.open(this.href, '_blank', 'noopener,noreferrer');
-  });
-
-    // Matrix rain effect
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const columns = Math.floor(canvas.width / 20);
-    const drops = [];
-
-    for (let i = 0; i < columns; i++) {
-      drops[i] = 1;
-    }
-
-    function draw() {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = '#00fff2';
-      ctx.font = '15px monospace';
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = String.fromCharCode(Math.random() * 128);
-        ctx.fillText(text, i * 20, drops[i] * 20);
-
-        if (drops[i] * 20 > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
+        :root {
+            --primary-color: #00ffff;
+            --secondary-color: #ff00ff;
+            --background-color: #000814;
+            --text-color: #e2e8f0;
+            --accent-color: #ffd60a;
+            --healthy-color: #10b981;
+            --unhealthy-color: #ef4444;
+            --loading-color: #f59e0b;
         }
 
-        drops[i]++;
-      }
-    }
+        body.light-mode {
+            --background-color: #f0f4f8;
+            --text-color: #1a202c;
+        }
 
-    setInterval(draw, 33);
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
-  </script>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            background: rgba(0, 8, 20, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.3), 0 0 100px rgba(255, 0, 255, 0.2);
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .container::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, var(--primary-color) 60deg, transparent 120deg);
+            animation: rotate 20s linear infinite;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+            grid-column: 1 / -1;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+            }
+            to {
+                text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+            }
+        }
+
+        #viewCount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 6rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-align: center;
+            margin: 2rem 0;
+            transition: all 0.5s ease;
+            text-shadow: 0 0 20px var(--accent-color);
+            grid-column: 1 / -1;
+        }
+
+        #error {
+            color: var(--unhealthy-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+
+        button {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--background-color);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 50px;
+            font-weight: 600;
+            display: block;
+            margin: 2rem auto;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        button:hover::before {
+            opacity: 1;
+            transform: scale(1.5) rotate(45deg);
+        }
+
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            background: rgba(0, 8, 20, 0.5);
+            border-radius: 15px;
+            padding: 1rem;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            grid-column: 1 / -1;
+        }
+
+        .info-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        #healthStatus {
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            grid-column: 1 / -1;
+        }
+
+        .healthy {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--healthy-color);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .unhealthy {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: var(--unhealthy-color);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+        }
+
+        .loading {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: var(--loading-color);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+        }
+
+        #graph {
+            width: 100%;
+            height: 150px;
+            margin-top: 2rem;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(0, 8, 20, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            grid-column: 1 / -1;
+        }
+
+        .bar {
+            width: 8%;
+            background: linear-gradient(to top, var(--primary-color), var(--secondary-color));
+            transition: height 0.5s ease;
+            border-radius: 5px 5px 0 0;
+            position: relative;
+        }
+
+        .bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: var(--text-color);
+        }
+
+        #themeToggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            #viewCount {
+                font-size: 4rem;
+            }
+
+            button {
+                font-size: 1rem;
+                padding: 0.8rem 1.6rem;
+            }
+
+            .info-label {
+                font-size: 0.8rem;
+            }
+
+            .info-value {
+                font-size: 1rem;
+            }
+
+            #healthStatus {
+                font-size: 0.9rem;
+            }
+
+            #graph {
+                height: 100px;
+            }
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <button id="themeToggle" aria-label="Toggle theme">🌓</button>
+    <div class="container">
+        <h1>Cosmic Views</h1>
+        <div id="viewCount">Loading...</div>
+        <div id="error"></div>
+        <button onclick="getCount()" aria-label="Sync Data">Sync Data</button>
+        <div id="healthStatus" class="loading">Initializing System...</div>
+        <div id="graph">
+            <div class="bar" data-value="0"></div>
+            <div class="bar" data-value="0"></div>
+            <div class="bar" data-value="0"></div>
+            <div class="bar" data-value="0"></div>
+            <div class="bar" data-value="0"></div>
+            <div class="bar" data-value="0"></div>
+            <div class="bar" data-value="0"></div>
+            <div class="bar" data-value="0"></div>
+            <div class="bar" data-value="0"></div>
+            <div class="bar" data-value="0"></div>
+        </div>
+        <div class="info-container">
+            <div class="info-item">
+                <div class="info-label">Last Sync</div>
+                <div id="lastUpdated" class="info-value">-</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Status</div>
+                <div id="statusInfo" class="info-value">-</div>
+            </div>
+        </div>
+    </div>
+    <div id="toast" class="toast"></div>
+
+    <script>
+        const API_BASE_URL = 'https://counter-r266.onrender.com';
+        let viewHistory = [];
+        let socket;
+
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+        });
+
+        function updateViewCount(count) {
+            const viewCountElement = document.getElementById('viewCount');
+            viewCountElement.style.transform = 'scale(1.1)';
+            viewCountElement.textContent = count.toLocaleString();
+            setTimeout(() => {
+                viewCountElement.style.transform = 'scale(1)';
+            }, 300);
+            updateLastUpdated();
+            updateGraph(count);
+        }
+
+        function updateGraph(count) {
+            viewHistory.push(count);
+            if (viewHistory.length > 10) viewHistory.shift();
+            
+            const max = Math.max(...viewHistory);
+            const bars = document.querySelectorAll('.bar');
+            viewHistory.forEach((value, index) => {
+                const height = (value / max) * 100;
+                bars[index].style.setProperty('--bar-height', `${height}%`);
+                bars[index].setAttribute('data-value', value);
+            });
+        }
+
+        function updateLastUpdated() {
+            const now = new Date();
+            document.getElementById('lastUpdated').textContent = now.toLocaleTimeString();
+        }
+
+        function updateStatusInfo(message) {
+            document.getElementById('statusInfo').textContent = message;
+        }
+
+        function showError(message) {
+            document.getElementById('error').textContent = `Error: ${message}`;
+        }
+
+        function clearError() {
+            document.getElementById('error').textContent = '';
+        }
+
+        async function fetchFromAPI(endpoint) {
+            try {
+                updateStatusInfo('Syncing...');
+                const response = await fetch(`${API_BASE_URL}${endpoint}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                clearError();
+                return data;
+            } catch (error) {
+                showError(error.message);
+                updateStatusInfo('Sync Failed');
+                console.error('Detailed error:', error);
+                throw error;
+            }
+        }
+
+        async function checkAPIHealth() {
+            const healthStatusElement = document.getElementById('healthStatus');
+            try {
+                const data = await fetchFromAPI('/health');
+                if (data.status === 'healthy') {
+                    healthStatusElement.textContent = 'System Online';
+                    healthStatusElement.className = 'healthy';
+                } else {
+                    healthStatusElement.textContent = 'System Degraded';
+                    healthStatusElement.className = 'unhealthy';
+                }
+            } catch (error) {
+                healthStatusElement.textContent = 'System Offline';
+                healthStatusElement.className = 'unhealthy';
+            }
+        }
+
+        async function getCount() {
+            try {
+                const data = await fetchFromAPI('/count');
+                updateViewCount(data.views);
+                updateStatusInfo('Sync Complete');
+                showToast('Data synced successfully', 'success');
+            } catch (error) {
+                console.error('Error getting count:', error);
+                showToast('Failed to sync data', 'error');
+            }
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast show ${type}`;
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
+        }
+
+        function initWebSocket() {
+            socket = new WebSocket('wss://your-websocket-server');
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                updateViewCount(data.views);
+            };
+            socket.onclose = () => {
+                console.log('WebSocket connection closed. Retrying in 5 seconds...');
+                setTimeout(initWebSocket, 5000);
+            };
+        }
+
+        // Initial API health check and count fetch
+        checkAPIHealth().then(() => getCount());
+
+        // Initialize WebSocket connection
+        initWebSocket();
+
+        // Set up automatic refresh every 30 seconds as a fallback
+        setInterval(() => {
+            if (socket.readyState !== WebSocket.OPEN) {
+                getCount();
+                checkAPIHealth();
+            }
+        }, 30000);
+
+        // Implement lazy loading for any images (if added in the future)
+        document.addEventListener("DOMContentLoaded", function() {
+            var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+
+            if ("IntersectionObserver" in window) {
+                let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyImage = entry.target;
+                            lazyImage.src = lazyImage.dataset.src;
+                            lazyImage.classList.remove("lazy");
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImageObserver.observe(lazyImage);
+                });
+            }
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+        // Keyboard accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.activeElement.tagName === 'BUTTON') {
+                document.activeElement.click();
+            }
+        });
+
+        // Error Boundary (simplified version for vanilla JS)
+        window.onerror = function(message, source, lineno, colno, error) {
+            console.error('An error occurred:', error);
+            showToast('An unexpected error occurred', 'error');
+            return true;
+        };
+    </script>
 </body>
 </html>
